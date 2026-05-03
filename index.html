@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Phí Gia Sư</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1814;
+    --card: #211f1a;
+    --border: #2e2b24;
+    --accent: #e8c87a;
+    --accent2: #b5936a;
+    --text: #f0ead8;
+    --muted: #7a7264;
+    --danger: #c0614a;
+    --success: #6aaa7a;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+  }
+
+  header span {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* MONTH NAV */
+  .month-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px 8px;
+  }
+
+  .month-nav button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .month-nav button:hover { background: var(--border); }
+
+  .month-nav .month-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent);
+    flex: 1;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 24px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    padding: 8px 18px;
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+
+  .tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a1814;
+    font-weight: 500;
+  }
+
+  .tab:hover:not(.active) { border-color: var(--accent2); color: var(--text); }
+
+  /* SUMMARY BAR */
+  .summary-bar {
+    margin: 16px 24px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .summary-item label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .summary-item .val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .summary-item .val.green { color: var(--success); }
+
+  /* CALENDAR CARD */
+  .calendar-card {
+    margin: 18px 24px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    animation: fadeUp 0.25s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cal-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cal-header .student-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .cal-header .price-tag {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    background: rgba(232,200,122,0.08);
+    border: 1px solid rgba(232,200,122,0.18);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .day-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px 12px 4px;
+    gap: 4px;
+  }
+
+  .day-labels span {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 4px 12px 14px;
+    gap: 5px;
+  }
+
+  .cal-day {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.14s;
+    background: var(--surface);
+    position: relative;
+    min-height: 38px;
+  }
+
+  .cal-day.empty { background: transparent; cursor: default; }
+
+  .cal-day .dn { font-size: 0.8rem; font-weight: 400; color: var(--muted); }
+  .cal-day.today .dn { color: var(--accent); font-weight: 500; }
+
+  .cal-day.marked {
+    background: rgba(232,200,122,0.12);
+    border-color: var(--accent);
+  }
+
+  .cal-day.marked .dn { color: var(--accent); font-weight: 500; }
+
+  .cal-day .hrs {
+    font-size: 0.62rem;
+    color: var(--accent2);
+    margin-top: 1px;
+    font-weight: 500;
+  }
+
+  .cal-day:not(.empty):hover {
+    border-color: var(--accent2);
+    transform: scale(1.04);
+  }
+
+  /* Month total row */
+  .cal-total {
+    padding: 10px 20px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cal-total span { font-size: 0.8rem; color: var(--muted); }
+  .cal-total strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--success);
+  }
+
+  /* MODAL */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .overlay.open { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    padding: 24px 24px 40px;
+    width: 100%;
+    max-width: 480px;
+    animation: slideUp 0.2s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+    color: var(--accent);
+  }
+
+  .modal label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+< truncated lines 304-564 >
+  } catch { return { students: [], sessions: {} }; }
+}
+
+function saveData(d) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+}
+
+let data = loadData();
+
+// Default sample students if empty
+if (data.students.length === 0) {
+  data.students = [
+    { id: 's1', name: 'An', pricePerHour: 80000 },
+    { id: 's2', name: 'Bình', pricePerHour: 100000 },
+  ];
+  saveData(data);
+}
+
+const today = new Date();
+let curYear = today.getFullYear();
+let curMonth = today.getMonth(); // 0-based
+let activeStudentId = data.students[0]?.id || null;
+
+// Current session modal state
+let modalStudentId = null;
+let modalDay = null;
+let selectedHour = null;
+
+// ── HELPERS ────────────────────────────────────────────
+function sessionKey(studentId, year, month, day) {
+  return `${studentId}_${year}_${month+1}_${day}`;
+}
+
+function fmt(n) {
+  return n.toLocaleString('vi-VN') + 'đ';
+}
+
+function monthName(month, year) {
+  return `Tháng ${month+1} / ${year}`;
+}
+
+// ── RENDER ────────────────────────────────────────────
+function render() {
+  renderMonthLabel();
+  renderTabs();
+  renderCalendar();
+  renderSummary();
+}
+
+function renderMonthLabel() {
+  document.getElementById('month-label').textContent = monthName(curMonth, curYear);
+  const d = today;
+  document.getElementById('today-display').textContent =
+    `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+}
+
+function renderTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = '';
+  if (data.students.length === 0) { tabs.innerHTML = ''; return; }
+  data.students.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (s.id === activeStudentId ? ' active' : '');
+    btn.textContent = s.name;
+    btn.onclick = () => { activeStudentId = s.id; render(); };
+    tabs.appendChild(btn);
+  });
+}
+
+function renderCalendar() {
+  const area = document.getElementById('calendar-area');
+  area.innerHTML = '';
+
+  if (data.students.length === 0) {
+    area.innerHTML = '<div class="empty-state">Chưa có học sinh nào.<br>Nhấn ⊕ để thêm học sinh.</div>';
+    return;
+  }
+
+  const student = data.students.find(s => s.id === activeStudentId);
+  if (!student) return;
+
+  const card = document.createElement('div');
+  card.className = 'calendar-card';
+
+  // Header
+  card.innerHTML = `
+    <div class="cal-header">
+      <div class="student-name">${student.name}</div>
+      <div class="price-tag">${fmt(student.pricePerHour)} / giờ</div>
+    </div>
+    <div class="day-labels">
+      <span>CN</span><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span>
+    </div>
+  `;
+
+  // Grid
+  const grid = document.createElement('div');
+  grid.className = 'cal-grid';
+
+  const firstDay = new Date(curYear, curMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+
+  // Empty cells
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+
+  let totalHours = 0;
+  let totalSessions = 0;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = sessionKey(student.id, curYear, curMonth, d);
+    const session = data.sessions[key];
+    const isToday = (d === today.getDate() && curMonth === today.getMonth() && curYear === today.getFullYear());
+
+    const cell = document.createElement('div');
+    cell.className = 'cal-day' + (session ? ' marked' : '') + (isToday ? ' today' : '');
+
+    cell.innerHTML = `<span class="dn">${d}</span>`;
+    if (session) {
+      cell.innerHTML += `<span class="hrs">${session.hours}h</span>`;
+      totalHours += session.hours;
+      totalSessions++;
+    }
+    if (isToday && !session) {
+      cell.innerHTML += `<span class="dot-today"></span>`;
+    }
+
+    cell.onclick = () => openSessionModal(student.id, d, session);
+    grid.appendChild(cell);
+  }
+
+  card.appendChild(grid);
+
+  // Total row
+  const totalFee = totalHours * student.pricePerHour;
+  const totalRow = document.createElement('div');
+  totalRow.className = 'cal-total';
+  totalRow.innerHTML = `
+    <span>${totalSessions} buổi · ${totalHours}h</span>
+    <strong>${fmt(totalFee)}</strong>
+  `;
+  card.appendChild(totalRow);
+
+  area.appendChild(card);
+}
+
+function renderSummary() {
+  // Sum across ALL students for current month
+  let totalSessions = 0, totalHours = 0, totalFee = 0;
+  data.students.forEach(s => {
+    const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const key = sessionKey(s.id, curYear, curMonth, d);
+      const sess = data.sessions[key];
+      if (sess) {
+        totalSessions++;
+        totalHours += sess.hours;
+        totalFee += sess.hours * s.pricePerHour;
+      }
+    }
+  });
+  document.getElementById('sum-sessions').textContent = totalSessions;
+  document.getElementById('sum-hours').textContent = totalHours + 'h';
+  document.getElementById('sum-fee').textContent = fmt(totalFee);
+}
+
+// ── MONTH NAV ────────────────────────────────────────
+function changeMonth(dir) {
+  curMonth += dir;
+  if (curMonth < 0) { curMonth = 11; curYear--; }
+  if (curMonth > 11) { curMonth = 0; curYear++; }
+  render();
+}
+
+// ── SESSION MODAL ─────────────────────────────────────
+function openSessionModal(studentId, day, existingSession) {
+  modalStudentId = studentId;
+  modalDay = day;
+  selectedHour = existingSession ? existingSession.hours : null;
+
+  const student = data.students.find(s => s.id === studentId);
+  document.getElementById('modal-title').textContent =
+    `${student.name} — Ngày ${day}/${curMonth+1}/${curYear}`;
+
+  // Reset
+  document.querySelectorAll('.hour-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('hour-input').value = existingSession ? existingSession.hours : '';
+
+  if (selectedHour) {
+    document.querySelectorAll('.hour-btn').forEach(b => {
+      if (parseFloat(b.textContent) === selectedHour) b.classList.add('sel');
+    });
+  }
+
+  document.getElementById('session-overlay').classList.add('open');
+}
+
+function selectHour(h) {
+  selectedHour = h;
+  document.querySelectorAll('.hour-btn').forEach(b => {
+    b.classList.toggle('sel', parseFloat(b.textContent) === h);
+  });
+  document.getElementById('hour-input').value = h;
+}
+
+function saveSession() {
+  const inputVal = parseFloat(document.getElementById('hour-input').value);
+  const hours = !isNaN(inputVal) && inputVal > 0 ? inputVal : selectedHour;
+  if (!hours) { alert('Vui lòng chọn hoặc nhập số giờ.'); return; }
+
+  const key = sessionKey(modalStudentId, curYear, curMonth, modalDay);
+  data.sessions[key] = { hours };
+  saveData(data);
+  closeModal();
+  render();
+}
+
+function clearSession() {
+  const key = sessionKey(modalStudentId, curYear, curMonth, modalDay);
+  delete data.sessions[key];
+  saveData(data);
+  closeModal();
+  render();
+}
+
+function closeModal() {
+  document.getElementById('session-overlay').classList.remove('open');
+}
+
+// ── MANAGE STUDENTS ───────────────────────────────────
+function openManage() {
+  renderStudentList();
+  document.getElementById('manage-overlay').classList.add('open');
+}
+
+function closeManage() {
+  document.getElementById('manage-overlay').classList.remove('open');
+  render();
+}
+
+function renderStudentList() {
+  const list = document.getElementById('student-list-manage');
+  list.innerHTML = '';
+  if (data.students.length === 0) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:0.85rem;margin-bottom:10px">Chưa có học sinh</div>';
+    return;
+  }
+  data.students.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'student-row';
+    row.innerHTML = `
+      <span class="sname">${s.name}</span>
+      <span class="sprice">${s.pricePerHour.toLocaleString('vi-VN')}đ/h</span>
+      <button class="btn-del-student" onclick="deleteStudent('${s.id}')" title="Xóa">✕</button>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function addStudent() {
+  const name = document.getElementById('new-name').value.trim();
+  const price = parseInt(document.getElementById('new-price').value);
+  if (!name || isNaN(price) || price <= 0) {
+    alert('Vui lòng nhập tên và giá hợp lệ.'); return;
+  }
+  const id = 's' + Date.now();
+  data.students.push({ id, name, pricePerHour: price });
+  if (!activeStudentId) activeStudentId = id;
+  saveData(data);
+  document.getElementById('new-name').value = '';
+  document.getElementById('new-price').value = '';
+  renderStudentList();
+}
+
+function deleteStudent(id) {
+  if (!confirm('Xóa học sinh này? Dữ liệu buổi học sẽ bị mất.')) return;
+  data.students = data.students.filter(s => s.id !== id);
+  // Clean sessions
+  Object.keys(data.sessions).forEach(k => {
+    if (k.startsWith(id + '_')) delete data.sessions[k];
+  });
+  if (activeStudentId === id) activeStudentId = data.students[0]?.id || null;
+  saveData(data);
+  renderStudentList();
+}
+
+// Click outside to close
+document.getElementById('session-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('manage-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeManage();
+});
+
+// Init
+render();
+</script>
+</body>
+</html>

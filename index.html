@@ -31,7 +31,6 @@
     padding: 0 0 80px;
   }
 
-  /* HEADER */
   header {
     padding: 28px 24px 20px;
     border-bottom: 1px solid var(--border);
@@ -59,7 +58,6 @@
     text-transform: uppercase;
   }
 
-  /* MONTH NAV */
   .month-nav {
     display: flex;
     align-items: center;
@@ -89,7 +87,6 @@
     flex: 1;
   }
 
-  /* TABS */
   .tabs {
     display: flex;
     gap: 8px;
@@ -121,7 +118,6 @@
 
   .tab:hover:not(.active) { border-color: var(--accent2); color: var(--text); }
 
-  /* SUMMARY BAR */
   .summary-bar {
     margin: 16px 24px 0;
     background: var(--surface);
@@ -151,7 +147,6 @@
 
   .summary-item .val.green { color: var(--success); }
 
-  /* CALENDAR CARD */
   .calendar-card {
     margin: 18px 24px 0;
     background: var(--card);
@@ -227,7 +222,6 @@
   }
 
   .cal-day.empty { background: transparent; cursor: default; }
-
   .cal-day .dn { font-size: 0.8rem; font-weight: 400; color: var(--muted); }
   .cal-day.today .dn { color: var(--accent); font-weight: 500; }
 
@@ -250,7 +244,6 @@
     transform: scale(1.04);
   }
 
-  /* Month total row */
   .cal-total {
     padding: 10px 20px 14px;
     border-top: 1px solid var(--border);
@@ -266,7 +259,6 @@
     color: var(--success);
   }
 
-  /* MODAL */
   .overlay {
     display: none;
     position: fixed; inset: 0;
@@ -301,7 +293,262 @@
 
   .modal label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
 
-< truncated lines 304-564 >
+  .modal input[type=number],
+  .modal input[type=text] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    padding: 11px 14px;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.14s;
+  }
+
+  .modal input:focus { border-color: var(--accent2); }
+
+  .hour-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .hour-btn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.14s;
+  }
+
+  .hour-btn:hover, .hour-btn.sel {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a1814;
+    font-weight: 500;
+  }
+
+  .modal-actions { display: flex; gap: 10px; }
+
+  .btn-save {
+    flex: 1;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: #1a1814;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 13px;
+    cursor: pointer;
+    transition: opacity 0.14s;
+  }
+
+  .btn-save:hover { opacity: 0.85; }
+
+  .btn-clear {
+    background: transparent;
+    border: 1px solid var(--danger);
+    border-radius: 10px;
+    color: var(--danger);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 13px 18px;
+    cursor: pointer;
+    transition: background 0.14s;
+  }
+
+  .btn-clear:hover { background: rgba(192,97,74,0.1); }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 13px 18px;
+    cursor: pointer;
+  }
+
+  .fab {
+    position: fixed;
+    bottom: 28px; right: 24px;
+    width: 54px; height: 54px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: #1a1814;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(232,200,122,0.25);
+    transition: transform 0.14s;
+    z-index: 150;
+  }
+  .fab:hover { transform: scale(1.08); }
+
+  .student-list-manage { margin-bottom: 14px; }
+
+  .student-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+
+  .student-row .sname { flex: 1; font-size: 0.9rem; }
+  .student-row .sprice { font-size: 0.8rem; color: var(--accent2); }
+
+  .btn-del-student {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.6;
+    transition: opacity 0.14s;
+  }
+  .btn-del-student:hover { opacity: 1; }
+
+  .add-student-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .add-student-row input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 9px 12px;
+    outline: none;
+  }
+
+  .add-student-row input:focus { border-color: var(--accent2); }
+  .add-student-row input.w2 { width: 110px; }
+  .add-student-row input.w1 { flex: 1; }
+
+  .btn-add-s {
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: #1a1814;
+    padding: 9px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 20px;
+    font-size: 0.9rem;
+  }
+
+  .dot-today {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: absolute;
+    bottom: 5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>✦ Học Phí Gia Sư</h1>
+  <span id="today-display"></span>
+</header>
+
+<div class="month-nav">
+  <button onclick="changeMonth(-1)">‹</button>
+  <div class="month-label" id="month-label"></div>
+  <button onclick="changeMonth(1)">›</button>
+  <button onclick="openManage()" style="margin-left:auto;font-size:0.85rem;width:auto;padding:0 14px;border-radius:20px;">+ HS</button>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="summary-bar" id="summary-bar">
+  <div class="summary-item">
+    <label>Tổng buổi</label>
+    <div class="val" id="sum-sessions">0</div>
+  </div>
+  <div class="summary-item">
+    <label>Tổng giờ</label>
+    <div class="val" id="sum-hours">0h</div>
+  </div>
+  <div class="summary-item">
+    <label>Học phí tháng</label>
+    <div class="val green" id="sum-fee">0đ</div>
+  </div>
+</div>
+
+<div id="calendar-area"></div>
+
+<div class="overlay" id="session-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Buổi học</h3>
+    <label>Số giờ học</label>
+    <div class="hour-btns" id="hour-btns">
+      <button class="hour-btn" onclick="selectHour(1)">1h</button>
+      <button class="hour-btn" onclick="selectHour(1.5)">1.5h</button>
+      <button class="hour-btn" onclick="selectHour(2)">2h</button>
+      <button class="hour-btn" onclick="selectHour(2.5)">2.5h</button>
+      <button class="hour-btn" onclick="selectHour(3)">3h</button>
+    </div>
+    <label>Hoặc nhập số giờ khác</label>
+    <input type="number" id="hour-input" placeholder="VD: 1.5" step="0.5" min="0.5" max="8">
+    <div class="modal-actions">
+      <button class="btn-save" onclick="saveSession()">Lưu buổi học</button>
+      <button class="btn-clear" onclick="clearSession()">Xóa</button>
+      <button class="btn-cancel" onclick="closeModal()">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="manage-overlay">
+  <div class="modal">
+    <h3>Quản lý học sinh</h3>
+    <div class="student-list-manage" id="student-list-manage"></div>
+    <div class="add-student-row">
+      <input type="text" class="w1" id="new-name" placeholder="Tên học sinh">
+      <input type="number" class="w2" id="new-price" placeholder="Giá/h (đ)">
+      <button class="btn-add-s" onclick="addStudent()">Thêm</button>
+    </div>
+    <br>
+    <button class="btn-cancel" style="width:100%;margin-top:4px" onclick="closeManage()">Xong</button>
+  </div>
+</div>
+
+<button class="fab" onclick="openManage()">⊕</button>
+
+<script>
+const STORAGE_KEY = 'giasuData_v2';
+
+function loadData() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { students: [], sessions: {} };
   } catch { return { students: [], sessions: {} }; }
 }
 
@@ -311,7 +558,6 @@ function saveData(d) {
 
 let data = loadData();
 
-// Default sample students if empty
 if (data.students.length === 0) {
   data.students = [
     { id: 's1', name: 'An', pricePerHour: 80000 },
@@ -322,46 +568,27 @@ if (data.students.length === 0) {
 
 const today = new Date();
 let curYear = today.getFullYear();
-let curMonth = today.getMonth(); // 0-based
+let curMonth = today.getMonth();
 let activeStudentId = data.students[0]?.id || null;
-
-// Current session modal state
 let modalStudentId = null;
 let modalDay = null;
 let selectedHour = null;
 
-// ── HELPERS ────────────────────────────────────────────
 function sessionKey(studentId, year, month, day) {
-  return `${studentId}_${year}_${month+1}_${day}`;
+  return ${studentId}_${year}_${month+1}_${day};
 }
 
 function fmt(n) {
   return n.toLocaleString('vi-VN') + 'đ';
 }
 
-function monthName(month, year) {
-  return `Tháng ${month+1} / ${year}`;
-}
-
-// ── RENDER ────────────────────────────────────────────
 function render() {
-  renderMonthLabel();
-  renderTabs();
-  renderCalendar();
-  renderSummary();
-}
-
-function renderMonthLabel() {
-  document.getElementById('month-label').textContent = monthName(curMonth, curYear);
+  document.getElementById('month-label').textContent = Tháng ${curMonth+1} / ${curYear};
   const d = today;
-  document.getElementById('today-display').textContent =
-    `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
-}
+  document.getElementById('today-display').textContent = ${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()};
 
-function renderTabs() {
   const tabs = document.getElementById('tabs');
   tabs.innerHTML = '';
-  if (data.students.length === 0) { tabs.innerHTML = ''; return; }
   data.students.forEach(s => {
     const btn = document.createElement('button');
     btn.className = 'tab' + (s.id === activeStudentId ? ' active' : '');
@@ -369,24 +596,20 @@ function renderTabs() {
     btn.onclick = () => { activeStudentId = s.id; render(); };
     tabs.appendChild(btn);
   });
-}
 
-function renderCalendar() {
   const area = document.getElementById('calendar-area');
   area.innerHTML = '';
 
   if (data.students.length === 0) {
     area.innerHTML = '<div class="empty-state">Chưa có học sinh nào.<br>Nhấn ⊕ để thêm học sinh.</div>';
-    return;
+    renderSummary(); return;
   }
 
   const student = data.students.find(s => s.id === activeStudentId);
-  if (!student) return;
+  if (!student) { renderSummary(); return; }
 
   const card = document.createElement('div');
   card.className = 'calendar-card';
-
-  // Header
   card.innerHTML = `
     <div class="cal-header">
       <div class="student-name">${student.name}</div>
@@ -397,22 +620,19 @@ function renderCalendar() {
     </div>
   `;
 
-  // Grid
   const grid = document.createElement('div');
   grid.className = 'cal-grid';
 
-  const firstDay = new Date(curYear, curMonth, 1).getDay(); // 0=Sun
+  const firstDay = new Date(curYear, curMonth, 1).getDay();
   const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
 
-  // Empty cells
   for (let i = 0; i < firstDay; i++) {
     const empty = document.createElement('div');
     empty.className = 'cal-day empty';
     grid.appendChild(empty);
   }
 
-  let totalHours = 0;
-  let totalSessions = 0;
+  let totalHours = 0, totalSessions = 0;
 
   for (let d = 1; d <= daysInMonth; d++) {
     const key = sessionKey(student.id, curYear, curMonth, d);
@@ -421,49 +641,34 @@ function renderCalendar() {
 
     const cell = document.createElement('div');
     cell.className = 'cal-day' + (session ? ' marked' : '') + (isToday ? ' today' : '');
-
-    cell.innerHTML = `<span class="dn">${d}</span>`;
+    cell.innerHTML = <span class="dn">${d}</span>;
     if (session) {
-      cell.innerHTML += `<span class="hrs">${session.hours}h</span>`;
+      cell.innerHTML += <span class="hrs">${session.hours}h</span>;
       totalHours += session.hours;
       totalSessions++;
     }
-    if (isToday && !session) {
-      cell.innerHTML += `<span class="dot-today"></span>`;
-    }
-
+    if (isToday && !session) cell.innerHTML += <span class="dot-today"></span>;
     cell.onclick = () => openSessionModal(student.id, d, session);
     grid.appendChild(cell);
   }
 
   card.appendChild(grid);
 
-  // Total row
-  const totalFee = totalHours * student.pricePerHour;
   const totalRow = document.createElement('div');
   totalRow.className = 'cal-total';
-  totalRow.innerHTML = `
-    <span>${totalSessions} buổi · ${totalHours}h</span>
-    <strong>${fmt(totalFee)}</strong>
-  `;
+  totalRow.innerHTML = <span>${totalSessions} buổi · ${totalHours}h</span><strong>${fmt(totalHours * student.pricePerHour)}</strong>;
   card.appendChild(totalRow);
-
   area.appendChild(card);
+  renderSummary();
 }
 
 function renderSummary() {
-  // Sum across ALL students for current month
   let totalSessions = 0, totalHours = 0, totalFee = 0;
   data.students.forEach(s => {
     const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
     for (let d = 1; d <= daysInMonth; d++) {
-      const key = sessionKey(s.id, curYear, curMonth, d);
-      const sess = data.sessions[key];
-      if (sess) {
-        totalSessions++;
-        totalHours += sess.hours;
-        totalFee += sess.hours * s.pricePerHour;
-      }
+      const sess = data.sessions[sessionKey(s.id, curYear, curMonth, d)];
+      if (sess) { totalSessions++; totalHours += sess.hours; totalFee += sess.hours * s.pricePerHour; }
     }
   });
   document.getElementById('sum-sessions').textContent = totalSessions;
@@ -471,7 +676,6 @@ function renderSummary() {
   document.getElementById('sum-fee').textContent = fmt(totalFee);
 }
 
-// ── MONTH NAV ────────────────────────────────────────
 function changeMonth(dir) {
   curMonth += dir;
   if (curMonth < 0) { curMonth = 11; curYear--; }
@@ -479,34 +683,21 @@ function changeMonth(dir) {
   render();
 }
 
-// ── SESSION MODAL ─────────────────────────────────────
 function openSessionModal(studentId, day, existingSession) {
   modalStudentId = studentId;
   modalDay = day;
   selectedHour = existingSession ? existingSession.hours : null;
-
   const student = data.students.find(s => s.id === studentId);
-  document.getElementById('modal-title').textContent =
-    `${student.name} — Ngày ${day}/${curMonth+1}/${curYear}`;
-
-  // Reset
+  document.getElementById('modal-title').textContent = ${student.name} — Ngày ${day}/${curMonth+1}/${curYear};
   document.querySelectorAll('.hour-btn').forEach(b => b.classList.remove('sel'));
   document.getElementById('hour-input').value = existingSession ? existingSession.hours : '';
-
-  if (selectedHour) {
-    document.querySelectorAll('.hour-btn').forEach(b => {
-      if (parseFloat(b.textContent) === selectedHour) b.classList.add('sel');
-    });
-  }
-
+  if (selectedHour) document.querySelectorAll('.hour-btn').forEach(b => { if (parseFloat(b.textContent) === selectedHour) b.classList.add('sel'); });
   document.getElementById('session-overlay').classList.add('open');
 }
 
 function selectHour(h) {
   selectedHour = h;
-  document.querySelectorAll('.hour-btn').forEach(b => {
-    b.classList.toggle('sel', parseFloat(b.textContent) === h);
-  });
+  document.querySelectorAll('.hour-btn').forEach(b => b.classList.toggle('sel', parseFloat(b.textContent) === h));
   document.getElementById('hour-input').value = h;
 }
 
@@ -514,92 +705,59 @@ function saveSession() {
   const inputVal = parseFloat(document.getElementById('hour-input').value);
   const hours = !isNaN(inputVal) && inputVal > 0 ? inputVal : selectedHour;
   if (!hours) { alert('Vui lòng chọn hoặc nhập số giờ.'); return; }
-
-  const key = sessionKey(modalStudentId, curYear, curMonth, modalDay);
-  data.sessions[key] = { hours };
-  saveData(data);
-  closeModal();
-  render();
+  data.sessions[sessionKey(modalStudentId, curYear, curMonth, modalDay)] = { hours };
+  saveData(data); closeModal(); render();
 }
 
 function clearSession() {
-  const key = sessionKey(modalStudentId, curYear, curMonth, modalDay);
-  delete data.sessions[key];
-  saveData(data);
-  closeModal();
-  render();
+  delete data.sessions[sessionKey(modalStudentId, curYear, curMonth, modalDay)];
+  saveData(data); closeModal(); render();
 }
 
-function closeModal() {
-  document.getElementById('session-overlay').classList.remove('open');
-}
+function closeModal() { document.getElementById('session-overlay').classList.remove('open'); }
 
-// ── MANAGE STUDENTS ───────────────────────────────────
 function openManage() {
-  renderStudentList();
-  document.getElementById('manage-overlay').classList.add('open');
-}
-
-function closeManage() {
-  document.getElementById('manage-overlay').classList.remove('open');
-  render();
-}
-
-function renderStudentList() {
   const list = document.getElementById('student-list-manage');
   list.innerHTML = '';
   if (data.students.length === 0) {
     list.innerHTML = '<div style="color:var(--muted);font-size:0.85rem;margin-bottom:10px">Chưa có học sinh</div>';
-    return;
+  } else {
+    data.students.forEach(s => {
+      const row = document.createElement('div');
+      row.className = 'student-row';
+      row.innerHTML = <span class="sname">${s.name}</span><span class="sprice">${s.pricePerHour.toLocaleString('vi-VN')}đ/h</span><button class="btn-del-student" onclick="deleteStudent('${s.id}')">✕</button>;
+      list.appendChild(row);
+    });
   }
-  data.students.forEach(s => {
-    const row = document.createElement('div');
-    row.className = 'student-row';
-    row.innerHTML = `
-      <span class="sname">${s.name}</span>
-      <span class="sprice">${s.pricePerHour.toLocaleString('vi-VN')}đ/h</span>
-      <button class="btn-del-student" onclick="deleteStudent('${s.id}')" title="Xóa">✕</button>
-    `;
-    list.appendChild(row);
-  });
+  document.getElementById('manage-overlay').classList.add('open');
 }
+
+function closeManage() { document.getElementById('manage-overlay').classList.remove('open'); render(); }
 
 function addStudent() {
   const name = document.getElementById('new-name').value.trim();
   const price = parseInt(document.getElementById('new-price').value);
-  if (!name || isNaN(price) || price <= 0) {
-    alert('Vui lòng nhập tên và giá hợp lệ.'); return;
-  }
+  if (!name || isNaN(price) || price <= 0) { alert('Vui lòng nhập tên và giá hợp lệ.'); return; }
   const id = 's' + Date.now();
   data.students.push({ id, name, pricePerHour: price });
   if (!activeStudentId) activeStudentId = id;
   saveData(data);
   document.getElementById('new-name').value = '';
   document.getElementById('new-price').value = '';
-  renderStudentList();
+  openManage();
 }
 
 function deleteStudent(id) {
   if (!confirm('Xóa học sinh này? Dữ liệu buổi học sẽ bị mất.')) return;
   data.students = data.students.filter(s => s.id !== id);
-  // Clean sessions
-  Object.keys(data.sessions).forEach(k => {
-    if (k.startsWith(id + '_')) delete data.sessions[k];
-  });
+  Object.keys(data.sessions).forEach(k => { if (k.startsWith(id + '_')) delete data.sessions[k]; });
   if (activeStudentId === id) activeStudentId = data.students[0]?.id || null;
-  saveData(data);
-  renderStudentList();
+  saveData(data); openManage();
 }
 
-// Click outside to close
-document.getElementById('session-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-document.getElementById('manage-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeManage();
-});
+document.getElementById('session-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.getElementById('manage-overlay').addEventListener('click', function(e) { if (e.target === this) closeManage(); });
 
-// Init
 render();
 </script>
 </body>
